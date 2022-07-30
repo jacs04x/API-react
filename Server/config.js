@@ -3,4 +3,4 @@ dotenv.config();
 
 export const MONGODB= process.env.PASSWORD
 
-export const PORT = process.env.PORT || 3000;
+export const PORT = process.env.PORT || 4000;

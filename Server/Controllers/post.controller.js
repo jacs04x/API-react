@@ -1,35 +1,68 @@
 import Post from '../Models/Post.js'
+import {uploadImage, deleteImage} from '../Libs/cloudinary.js'
+import fs from 'fs-extra'
 
 export const getPost = async(req, res) => {
+try {
     const posts = await Post.find();    
     return res.send(posts);
+} catch (error) {
+    console.error(error.message);
+    return res.sendStatus(500).json({message: error.message});
+}
 }
 
 export const getById = async(req, res) => {
+try {
     const post = await Post.findById(req.params.id)
-    if (!post) {return res.send("no encontrado")}
-    console.log(post);
-    return res.send("encontrado")
+    if (!post) {return res.sendStatus(404);}
+    return res.send(post);
+} catch (error) {
+    return res.sendStatus(500).json({message: error.message});
+}
 }
 
 export const createPost = async(req, res) => {
+try {
     const {title , description} = req.body
-    const post = new Post({title, description})
-    await post.save()
-    return res.json(post)
+    let image;
+    if(req.files?.image){
+        const result = await uploadImage( req.files.image.tempFilePath)
+        image = {
+            url: result.secure_url,
+            public_id : result.public_id
+        }
+        await fs.remove(req.files.image.tempFilePath)
+    }
+    const newPost = new Post({title, description, image})
+    await newPost.save()
+    return res.send(newPost);
+} catch (error) {
+    return res.sendStatus(500).json({message: error.message});
 }
 
-export const updatePost = async(req, res) => {
+}
+
+export const updatePost = async(req, res) => {  
+try {
     const post = await Post.findByIdAndUpdate(req.params.id, req.body , {new : true})
     console.log(post);
-    return res.send("actualizado");
+    return res.sendStatus(204);
+} catch (error) {
+    return res.sendStatus(500).json({message: error.message});
+}
+
 }
 
 export const deletePost = async(req, res) => {
+try {
     const post = await Post.findByIdAndDelete(req.params.id);
-    if(!post){
-        return res.send("no encontrado")
-    }
-    console.log(post);
-    return res.send("eliminado")
+    
+    if(!post){return res.sendStatus(404);}
+    if(post.image?.public_id){ await deleteImage(post.image.public_id) }
+
+    return res.sendStatus(204);
+} catch (error) {
+    return res.sendStatus(500).json({message: error.message});
+}
 }
