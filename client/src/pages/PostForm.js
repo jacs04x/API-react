@@ -7,7 +7,7 @@ import {toast} from 'react-hot-toast'
 import {useEffect, useState} from 'react';
 
 export const PostForm = () => {
-  const {createPost, getPostById} = usePost()
+  const {createPost, getPostById, updatePost} = usePost()
   const navigate = useNavigate()
   const params = useParams();
   const [post, setPost] = useState({
@@ -21,14 +21,17 @@ export const PostForm = () => {
     if(params.id) {
       const res =  await getPostById(params.id)
       setPost(res)
-      console.log(res)
     }
   })();
   }, [])
 
   return (
     <div className='flex items-center justify-center'>
+      
       <div className='bg-zinc-800 p-10 shadow-sm shadow-black'> 
+      <div className='flex items-end justify-end' >
+        <Link to='/' className="text-white"> Regresar</Link>
+      </div>
       <Formik
       initialValues={
         post
@@ -41,11 +44,17 @@ export const PostForm = () => {
       }
     
       onSubmit={ async(values, actions) => {
-          const res = await createPost(values)
-          if(res) {
+          
+          if(params.id){
+            updatePost(values)
+          }else{
+            const res = await createPost(values)
+            if(res) {
             toast.success("Agregado!")
-          navigate('/')
+            navigate('/')
+            }
           }
+
         
       }}
 
@@ -78,9 +87,7 @@ export const PostForm = () => {
         </Form>
         )}
       </Formik>
-      <div className='flex items-center justify-center mt-2' >
-        <Link to='/' className="text-white"> Regresar</Link>
-      </div>
+
       </div>
       
     </div>

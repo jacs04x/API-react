@@ -19,7 +19,7 @@ export const HomePage = () => {
   return (
     <div >
         <div className="flex items-center justify-center py-3">
-          <Link to="/new"> <button className='px-5 py-2 rounded bg-teal-200 hover:bg-teal-500'> New </button> </Link>
+          <Link to="/new"> <button className='px-5 py-2 rounded bg-teal-500 hover:bg-teal-300'> New </button> </Link>
         </div>
         <div className="grid grid-cols-4 gap-4" >
 
