@@ -1,7 +1,7 @@
 //import {usePost} from '../context/postContext.js'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import {usePost} from '../context/postContext.js'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link} from 'react-router-dom'
 import * as Yup from 'yup'
 import {toast} from 'react-hot-toast'
 import {useEffect, useState} from 'react';
@@ -27,8 +27,8 @@ export const PostForm = () => {
   }, [])
 
   return (
-    <div>
-      
+    <div className='flex items-center justify-center'>
+      <div className='bg-zinc-800 p-10 shadow-sm shadow-black'> 
       <Formik
       initialValues={
         post
@@ -53,7 +53,7 @@ export const PostForm = () => {
       >
         {({handleSubmit}) => (
           <Form onSubmit={handleSubmit}>
-            <label htmlFor='title' className='text-sm block text-white'> Titulo</label>
+            <label htmlFor='title' className='text-sm block text-white font-bold py-2'> Titulo</label>
           <Field 
             className="px-1 py-2 focus:outline-none rounded w-full"
             name='title'
@@ -62,7 +62,7 @@ export const PostForm = () => {
 
           <ErrorMessage component="p" name='title' className='text-red-400 text-sm'/>
 
-          <label htmlFor='description' className='text-sm block text-white'> Descripción</label>
+          <label htmlFor='description' className='text-sm block text-white font-bold py-2'> Descripción</label>
           <Field 
             component='textarea'
             className="px-3 py-2 w-full"
@@ -71,12 +71,18 @@ export const PostForm = () => {
             rows={3}
             />
           <ErrorMessage component="p" name='description' className='text-red-400 text-sm'/>
-
+          <div className="flex items-center justify-center">
           <button type='submit' className='text-white block bg-indigo-800 hover:bg-indigo-700 
           rounded mt-2 px-4 py-2 focus: outline-none disabled: bg-indigo-600'>Guardar</button>
+          </div>
         </Form>
         )}
       </Formik>
+      <div className='flex items-center justify-center mt-2' >
+        <Link to='/' className="text-white"> Regresar</Link>
+      </div>
+      </div>
+      
     </div>
   )
 }
