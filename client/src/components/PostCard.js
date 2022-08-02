@@ -3,6 +3,7 @@ import {toast} from 'react-hot-toast'
 import {usePost} from '../context/postContext.js'
 import {useNavigate} from 'react-router-dom'
 
+
 export const PostCard = ({post}) => {
 
   const {deletePost} = usePost();
@@ -31,40 +32,25 @@ export const PostCard = ({post}) => {
   
   return (
     <div 
-    className='bg-zinc-800 
-               text-white 
-                 rounded-sm 
-                 shadow-md 
-                 shadow-black 
-                 hover:bg-zinc-700
-                 hover: cursor-pointer'
-    
+    className='bg-zinc-800 text-white rounded-sm shadow-md shadow-black hover:bg-zinc-700 hover: cursor-pointer'
+    onClick={() => navigate(`/edit/${post._id}`)}
     >
+        {post.image && <img src={post.image.url} />}
         <div className="px-6 py-7" >
-            <div className="flex justify-between">
+            
+            <div className="flex justify-between py-2">
             <h3>{post.title}</h3>
-            <button
-                className="bg-red-600 
-                          text-sm
-                          px-2
-                          py-1
-                          rounded" 
-                onClick={() => hadleDelete(post._id)}
-            >Eliminar</button>
-            </div>
-            <br />
-            <div className="flex justify-between ">
+            <button className="bg-red-600 text-sm px-2 py-1 rounded" 
+                onClick={(e) =>  {
+                    e.stopPropagation()
+                    hadleDelete(post._id)
+                    }
+                } >Eliminar</button>
+            </div>            
             <p>{post.description}</p>
-            <button
-                className="bg-yellow-600 
-                          text-sm
-                          px-2
-                          py-1
-                          rounded" 
-                onClick={() => navigate(`/edit/${post._id}`)}
-            >Editar</button>
-            </div>
+            
         </div>
+            
     </div>
   )
 }

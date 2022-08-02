@@ -5,7 +5,16 @@ export const getPostRequest = async() => {
 }
 
 export const createPostResquest = async (post) => {
-    return await axios.post('/post', post)
+    const form = new FormData()
+    //se convierte el json a form 
+    for(let key in post){
+        form.append(key, post[key])
+    }
+    return await axios.post('/post', form, {
+        headers: {
+            "Content-Type" : "multipart/form-data"
+        }
+    });
 }
 
 export const deletePostRequest = async (id) => {
@@ -16,6 +25,6 @@ export const getPostByIdRequest = async (id) => {
     return await axios.get('/post/'+id)
 }
 
-export const updatePostRequest = async (post) => {
-    return await axios.put('/post/'+post._id, post)
+export const updatePostRequest = async (id, post) => {
+    return await axios.put('/post/'+id, post)
 }

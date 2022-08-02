@@ -20,12 +20,17 @@ export const PostProvider = ({children}) => {
     }
 
     const createPost = async (nuevo) => {
-        const res = await createPostResquest(nuevo)
-        if(res){
-        setPost([...post,res.data])
-        return 1;
-        } 
-        return 0
+        try {
+            const res = await createPostResquest(nuevo)
+            if(res){
+            setPost([...post,res.data])
+            return 1;
+            } 
+            return 0            
+        } catch (error) {
+            console.error(error)
+        }
+
     }
 
     const deletePost = async (id) => {
@@ -41,9 +46,10 @@ export const PostProvider = ({children}) => {
 
     }
 
-    const updatePost = async (nuevo) => {
-        //const res= await updatePostRequest(nuevo);
-        console.log({update: nuevo})
+    const updatePost = async (id, nuevo) => {   
+        const res= await updatePostRequest(id, nuevo);
+        setPost(post.map((p) => (p._id === id ? res.data : p)))
+        
     }
 
     useEffect(()=> {
