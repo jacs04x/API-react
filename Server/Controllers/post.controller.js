@@ -84,6 +84,12 @@ export const createPost = async(req, res) => {
 }
 
 
+/* 
+Actualizamos un elemento del schema, obtenemos el valor del id con el uso de los parametros de la peticion,
+y obtenemos el cuerpo de la peticion y llamamos al metodo findByIdAndUpdate() a este le agregamos como tercer parametro 
+un objeto indicando que al actualizar regrese el elemento del schema actualizado y no los valores anteriores a la 
+actualizacion, finalmente retornamos este elemento actualizado, si hay un error manda un status 500
+ */
 
 export const updatePost = async(req, res) => {  
     try {
@@ -93,6 +99,18 @@ export const updatePost = async(req, res) => {
         return res.sendStatus(500).json({message: error.message});
     }
 }
+
+
+/* 
+Eliminamos un elemento del schema, obtenemos el valor del id con el uso de los parametros de la peticion
+llamamos al metodo findByIdAndDelete() y le pasamos este id si obtenemos respuesta con el elemento eliminado y si 
+este contiene la propiedad image y este a su vez constiene la propiedad public_id eliminamos la imagen de cloudinary pasandole 
+estas propiedades, 
+en caso de no obtener esta respuesta regresamos status 404 ya que no fue encontrado y no fue eliminado.
+
+
+*/
+
 
 export const deletePost = async(req, res) => {
 try {
