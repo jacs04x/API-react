@@ -21,7 +21,7 @@ export const HomePage = () => {
     <div >
         <div className="flex items-center justify-between  py-3">
           <p className='text-white'>Posts: {post.length}</p>
-          <Link to="/new"> <button className='px-5 py-2 rounded bg-teal-500 hover:bg-teal-300'> Nuevo </button> </Link>
+          <Link to="/new"> <button className='px-5 py-2 rounded bg-teal-500 hover:bg-teal-900 text-white'> Nuevo </button> </Link>
         </div>
         <div className="grid grid-cols-4 gap-4" >
           {

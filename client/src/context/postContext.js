@@ -1,17 +1,3 @@
-/* 
-Un Hook es una función de javascript que permite crear/acceder al estado y a los ciclos de vida de React y que, 
-para asegurar la estabilidad de la aplicación.
-
-allows to use all React features without writing class components.
-
-Importamos desde react los hooks:
-> useState: useState hook is a function which is used to store state value in a functional component. 
-    It accepts an argument as the initial value of the state. It returns an array with 2 elements.
-    First element is the current value of state. Second element is a function to update the state.
-> createContext: 
-> useContext: 
-> useEffect: 
-*/
 
 import {useState, createContext, useContext, useEffect} from 'react';
 
@@ -21,6 +7,9 @@ import {getPostRequest,
         getPostByIdRequest,
         updatePostRequest} from '../api/post.js'
 
+/* 
+Context está diseñado para compartir datos que pueden considerarse “globales” para un árbol de componentes en React
+ */
 const postContext = createContext()
 
 export const usePost = () => {

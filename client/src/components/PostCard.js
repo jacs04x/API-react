@@ -30,14 +30,18 @@ export const PostCard = ({post}) => {
     ) )
   }
   
+  const carta = {
+    inside:'bg-zinc-800 text-white shadow-md shadow-black hover:bg-zinc-700'
+}
+
   return (
     <div 
-    className='bg-zinc-800 text-white rounded-sm shadow-md shadow-black hover:bg-zinc-700 hover: cursor-pointer'
+    className= {carta.inside}
     onClick={() => navigate(`/edit/${post._id}`)}
     >
         {post.image && <img src={post.image.url} />}
-        <div className="px-6 py-7" >
-            
+        <div className="px-6 py-7">
+             
             <div className="flex justify-between py-2">
             <h3>{post.title}</h3>
             <button className="bg-red-600 text-sm px-2 py-1 rounded" 
